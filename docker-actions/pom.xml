@@ -30,12 +30,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+        <docker.auth.username />
+        <docker.auth.password />
         <docker.url>docker.pkg.github.com</docker.url>
         <docker.repo>divloic/ccloud-registry-action</docker.repo>
         <docker.image.name>${project.artifactId}</docker.image.name>
         <docker.image.url>${docker.url}/${docker.repo}/${docker.image.name}:${project.version}</docker.image.url>
-        <docker.auth.username></docker.auth.username>
-        <docker.auth.password></docker.auth.password>
 
         <confluent.version>5.3.2</confluent.version>
         <logback.version>1.2.3</logback.version>
@@ -47,7 +47,10 @@
     </properties>
 
     <scm>
-        <connection>https://github.com/DivLoic/ccloud-registry-action.git</connection>
+        <url>https://github.com/DivLoic/ccloud-registry-action.git</url>
+        <connection>scm:git:https://github.com/DivLoic/ccloud-registry-action.git</connection>
+        <developerConnection>scm:git:https://github.com/DivLoic/ccloud-registry-action.git</developerConnection>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
@@ -230,6 +233,21 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <goals>deploy jib:build</goals>
+                    <pushChanges>false</pushChanges>
+                    <localCheckout>true</localCheckout>
+                    <tagNameFormat>v@{project.version}</tagNameFormat>
+                    <checkModificationExcludes>
+                        <checkModificationExclude>**</checkModificationExclude>
+                    </checkModificationExcludes>
+                </configuration>
             </plugin>
 
             <plugin>
