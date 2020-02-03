@@ -1,0 +1,30 @@
+name: 'Schema Validation'
+description: 'Confluent Cloud schema registry compatibility check'
+inputs:
+  avro-subject-yaml:
+    description: ''
+    required: false
+    default: 'schemas.yaml'
+  avro-files-path:
+    description: ''
+    required: false
+    default: 'src/main/resources'
+  schema-registry-url:
+    description: ''
+    required: true
+  schema-registry-api-key:
+    description: ''
+    required: true
+  schema-registry-secret-key:
+    description: ''
+    required: true
+
+runs:
+  using: 'docker'
+  image: 'docker.pkg.github.com/lmdiv/cicd-registry-test2/cicd-registry-docker-test2:0.0.3'
+  env:
+    AVRO-FILES-PATH: ${{ imputs.avro-files-path }}
+    AVRO-SUBJECT-YAML: ${{ imputs.avro-subject-yaml }}
+    SCHEMA-REGISTRY-URL: ${{ imputs.schema-registry-url }}
+    SCHEMA-REGISTRY-API-KEY: ${{ inputs.schema-registry-api-key }}
+    SCHEMA-REGISTRY-SECRET-KEY: ${{ inputs.schema-registry-secret-key }}
